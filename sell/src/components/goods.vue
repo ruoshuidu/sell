@@ -39,19 +39,23 @@
         </ul>    
       </div>  
       <!-- 购物车 -->
-      
+      <shopcart></shopcart>
     </div>
 </template>
 <script>
 import axios from 'axios'
 import Vue from 'vue'
 import BScroll from 'better-scroll'
+import ShopCart from './shopcart'
 export default {
     data () {
         return {
             goods:[],
             heightList:[]
         }
+    },
+    components:{
+        'shopcart':ShopCart,
     },
     created () {
         this.classMap = ['decrease','discount','special','invoice','guarantee']
