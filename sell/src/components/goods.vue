@@ -17,20 +17,23 @@
             <li v-for="(items,index) in goods" :key="index" class="foods-list">
                 <div class="items-title">{{items.name}}</div>
                 <ul class="items-content">
-                    <li v-for="(item2,index) in items.foods" :key="index" class="items-content-wrapper">
-                        <div class="item-icon"><img :src="item2.icon" alt=""></div>
+                    <li v-for="(food,index) in items.foods" :key="index" class="items-content-wrapper">
+                        <div class="item-icon"><img :src="food.icon" alt=""></div>
                         <div class="item-content">
-                            <div class="item-name">{{item2.name}}</div>
-                            <div v-show="item2.description" class="items-description">
-                                {{item2.description}}
+                            <div class="item-name">{{food.name}}</div>
+                            <div v-show="food.description" class="items-description">
+                                {{food.description}}
                             </div>
                             <div class="rating">
-                                <span>月售{{item2.sellCount}}份</span>
-                                <span style="margin-left:12px;">好评率{{item2.rating}}%</span>
+                                <span>月售{{food.sellCount}}份</span>
+                                <span style="margin-left:12px;">好评率{{food.rating}}%</span>
                             </div>
                             <div class="prices">
-                                <span class="price">{{item2.price}}</span>
-                                <span class="old-price" v-if="item2.oldPrice" style="margin-left:8px;">￥{{item2.oldPrice}}</span>
+                                <span class="price">{{food.price}}</span>
+                                <span class="old-price" v-if="food.oldPrice" style="margin-left:8px;">￥{{food.oldPrice}}</span>
+                            </div>
+                            <div class="cart-control-wrapper">
+                                <cart-control :food="food"></cart-control>
                             </div>
                         </div>
                     </li>
@@ -39,7 +42,7 @@
         </ul>    
       </div>  
       <!-- 购物车 -->
-      <shopcart></shopcart>
+      <shopcart :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice" :selectFoods="selectFoods"></shopcart>
     </div>
 </template>
 <script>
@@ -47,15 +50,19 @@ import axios from 'axios'
 import Vue from 'vue'
 import BScroll from 'better-scroll'
 import ShopCart from './shopcart'
+import cartControl from './cartcontrol'
 export default {
     data () {
         return {
             goods:[],
-            heightList:[]
+            heightList:[],
+            seller:{},
         }
     },
+    
     components:{
         'shopcart':ShopCart,
+        cartControl
     },
     created () {
         this.classMap = ['decrease','discount','special','invoice','guarantee']
@@ -65,6 +72,9 @@ export default {
                this._initScroll()//初始化scroll
                this._caculateHeight()//计算每一个foods-list高度
            })          
+        }),
+        axios.get('/good/seller').then(res => {
+            this.seller = res.data.data
         })    
     },
     computed:{
@@ -75,9 +85,20 @@ export default {
                 if(!height2 || (this.scrollY >= height1 && this.scrollY <= height2)){
                     return i
                 }
-                console.log(height1 + ' ' + height2 + ' ' + i)
+                // console.log(height1 + ' ' + height2 + ' ' + i)
             }
             return 0
+        },
+        selectFoods() {
+            let foods = []
+            this.goods.forEach((good) => {
+                good.foods.forEach((food) => {
+                    if(food.count){
+                        foods.push(food)
+                    }
+                })
+            })
+            return foods
         }
     },
     methods:{
@@ -238,6 +259,11 @@ export default {
                                vertical-align: top;
                                text-decoration: line-through;
                            }
+                       }
+                       .cart-control-wrapper{
+                           position: absolute;
+                           bottom: 14px;
+                           right: 0;
                        }
                    }
                }

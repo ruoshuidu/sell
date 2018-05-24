@@ -14,6 +14,7 @@
 <script>
 import Header from './components/header'
 import Goods from './components/goods'
+
 import axios from 'axios'
 export default {
   name: 'App',

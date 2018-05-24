@@ -16,13 +16,13 @@
                     <span class="icon" :class="classMap[seller.supports[0].type]"></span>
                     <span>{{seller.supports[0].description}}</span>
                 </div>
-                <div class="num-wrapper" v-if="seller.supports">
+                <div class="num-wrapper" v-if="seller.supports" @click="handleShowDetail">
                     <span class="number">{{seller.supports.length}}个</span>
                     <span class="icon-keyboard_arrow_right"></span>
                 </div>
             </div>
         </div>
-        <div class="buttetin-wrapper">
+        <div class="buttetin-wrapper" @click="handleShowDetail">
             <span class="butterin-icon"></span>
             <span class="butterin">{{seller.bulletin}}</span>
              <span class="icon-keyboard_arrow_right more"></span>
@@ -30,17 +30,44 @@
         <div class="bg">
             <img :src="seller.avatar" alt="">
         </div>
+        <div class="detail" v-show="showDetail">
+            <div class="detail-wrapper clearfix">
+                <div class="detail-main">
+                    <h1 class="name">{{seller.name}}</h1>
+                    <star :size="48" :score="4"></star>
+                </div>
+            </div>
+            <div class="detail-close" @click="handleHideDetail" >
+                <span class="icon-close"></span>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import star from './star'
 export default {
     props:{
         seller:Object,
     },
-    
+    components:{
+        star
+    },
+    data() {
+        return {
+            showDetail:false
+        }
+    },
     created(){
         this.classMap = ['decrease','discount','special','invoice','guarantee']
         console.log(this.seller.name)
+    },
+    methods: {
+        handleShowDetail() {
+            this.showDetail = true;
+        },
+        handleHideDetail() {
+            this.showDetail = false;
+        }
     }
 }
 </script>
@@ -168,6 +195,40 @@ export default {
         img{
             background-size: cover;
             width: 100%;
+        }
+    }
+    .detail{
+        position: fixed;
+        overflow: auto;
+        background: rgba(7,17,27,0.8);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        .detail-wrapper{
+            width: 100%;
+            min-height: 100%;//如果内容不够长时，也保证内容有全屏长度
+            .detail-main{
+                margin-top: 64px;
+                padding-bottom: 64px;
+                color: #fff;
+                .name{
+                    font-size: 16px;
+                    font-weight: 700;
+                    text-align: center;
+                }
+            }
+        }
+        .detail-close{
+            width: 32px;
+            height: 32px;
+            position: relative;
+            margin:-64px auto 0;
+            .icon-close{
+                font-size: 32px;
+                color: #fff;
+            }
         }
     }
 }

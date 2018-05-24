@@ -2,20 +2,59 @@
     <div class="shopcart">
         <div class="content">
             <div class="chart-icon-wrapper">
-                <div class="chart-icon icon-shopping_cart"></div>
-                <div class="total-count">3</div>
+                <div class="chart-icon icon-shopping_cart" :class="{noZchart:totalCount != 0}"></div>
+                <div class="total-count" v-show="totalCount != 0" >{{totalCount}}</div>
             </div>
             <div class="deliver-fee">
-                <div class="price">￥33</div>
-                <div class="pricedelive">另需配送费￥4元</div>
+                <div class="price" :class="{npZprice:totalCount != 0}">￥{{totalPrice}}</div>
+                <div class="pricedelive">另需配送费￥{{deliveryPrice}}元</div>
             </div>
-            <div class="deliver-base">还差21元起送</div>
+            <div class="deliver-base" :class="{ok:totalPrice >= minPrice}">{{inform}}</div>
         </div>
     </div>
 </template>
 <script>
 export default {
-    
+    props:{
+        minPrice:Number,
+        deliveryPrice:Number,
+        selectFoods: {
+            type:Array
+        }
+    },
+    data() {
+        return {
+           
+        }
+    },
+    computed: {
+        totalCount(){
+            let totalCount = 0;
+            this.selectFoods.forEach((food) => {
+                totalCount += food.count
+            })
+            return totalCount
+        },
+        totalPrice() {
+            let totalPrice = 0;
+            this.selectFoods.forEach((food) => {
+                totalPrice += food.count * food.price
+            })
+            return totalPrice
+        },
+        inform () {
+            if(this.totalPrice === 0){
+                return `￥${this.minPrice}`
+            }else if(this.totalPrice > 0 && this.totalPrice < this.minPrice) {
+                return `还差${this.minPrice - this.totalPrice}元起送`;
+            }else{
+                return '去结算'
+            }
+        }
+    },
+    methods: {
+
+    }
 }
 </script>
 <style lang="less" scoped>
@@ -48,7 +87,10 @@ export default {
                 color: rgba(255,255,255,0.4);
                 line-height: 44px;
                 text-align: center;  
-                margin-left: 18px;       
+                margin-left: 18px; 
+                &.noZchart{
+                    color: #fff;
+                }      
             }
             .total-count{
                 width: 24px;

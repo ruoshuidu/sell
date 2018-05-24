@@ -49,10 +49,12 @@
             "营业时间:10:00-20:30"
         ]
     },
-    "goods": [{
+    "goods": [
+        {
             "name": "热销榜",
             "type": -1,
-            "foods": [{
+            "foods": [
+                {
                     "name": "皮蛋瘦肉粥",
                     "price": 10,
                     "oldPrice": 12,
