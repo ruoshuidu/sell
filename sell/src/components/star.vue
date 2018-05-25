@@ -11,13 +11,17 @@ const CLS_HALF = 'half'
 export default {
     data() {
         return {
-            size:Number,
-            score:Number
+            size: { 
+                type: Number
+            },
+            score:{
+                type:Number
+            }
         }
     },
     computed:{
-        starType() {
-            return 'star-' + this.score
+        starType(){ //通过计算属性,返回组装过的类型,用来对应class类型
+            return 'star-48'
         },
         itemClasses(){
             let result = [];
@@ -26,12 +30,11 @@ export default {
             let integer = Math.floor(score)
             for(let i = 0; i < integer; i ++){
                 result.push(CLS_ON)
-                console.log(result)
             }
             if(hasDecinal){
                 result.push(CLS_HALF)
             }
-            while(result.length <= LENGTH){
+            while(result.length < LENGTH){
                 result.push(CLS_off)
                  
             }
@@ -42,54 +45,81 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-    // .star{
-    //     font-size: 0;
-    //     .star-item{
-    //         display: inline-block;
-    //         background-repeat: no-repeat;
-    //     }
-    //     &.star-48{
-    //         .star-item{
-    //             width: 20px;
-    //             height: 20px;
-    //             margin-right: 22px;
-    //             &:last-child{
-    //                 margin-right: 0;
-    //             }
-    //             &.on{
-    //                 background: url('../assets/img/star48_on@2x.png')
-    //             }
-    //             &.half{
-    //                  background: url('../assets/img/star48_half@2x.png')
-    //             }
-    //             &.off{
-    //                  background: url('../assets/img/star48_off@2x.png')
-    //             }
-    //         }
-    //     }
-      
-
-    // }
     .star{
         font-size: 0;
-    }
-    &.star-48{
+        text-align: center;
+        margin:20px auto 30px;
         .star-item{
             display: inline-block;
-            background-repeat: no-repeat;
-            width: 20px;
-            height: 20px;
-            margin-right: 22px;
-           
-            &.on{
-                background: url('../assets/img/star48_on@2x.png')
-            }
-            &.half{
-                    background: url('../assets/img/star48_half@2x.png')
-            }
-            &.off{
-                    background: url('../assets/img/star48_off@2x.png')
+            background-repeat: no-repeat !important;
+        }
+        &.star-48{
+            .star-item{
+                width: 20px;
+                height: 20px;
+                margin-right: 22px;
+                &:last-child{
+                    margin-right: 0;
+                }
+                &.on{
+                    background: url('../assets/img/star48_on@2x.png');
+                    background-size: 20px 20px;
+                }
+                &.half{
+                    background: url('../assets/img/star48_half@2x.png');
+                    background-size: 20px 20px;
+                }
+                &.off{
+                    background: url('../assets/img/star48_off@2x.png');
+                    background-size: 20px 20px;
+                }
             }
         }
+        &.star-36{
+            .star-item{
+                width: 15px;
+                height: 15px;
+                margin-right: 6px;
+                &:last-child{
+                    margin-right: 0;
+                }
+                &.on{
+                    background: url('../assets/img/star36_on@2x.png');
+                    background-size: 15px 15px;
+                }
+                &.half{
+                    background: url('../assets/img/star36_half@2x.png');
+                    background-size: 15px 15px;
+                }
+                &.off{
+                    background: url('../assets/img/star36_off@2x.png');
+                    background-size: 15px 15px;
+                }
+            }
+        }
+        &.star-24{
+            .star-item{
+                width: 10px;
+                height: 10px;
+                margin-right: 3px;
+                &:last-child{
+                    margin-right: 0;
+                }
+                &.on{
+                    background: url('../assets/img/star24_on@2x.png');
+                    background-size: 10px 10px;
+                }
+                &.half{
+                    background: url('../assets/img/star24_half@2x.png');
+                    background-size: 10px 10px;
+                }
+                &.off{
+                    background: url('../assets/img/star24_off@2x.png');
+                    background-size: 10px 10px;
+                }
+            }
+        }
+
     }
+
 </style>

@@ -34,7 +34,7 @@
             <div class="detail-wrapper clearfix">
                 <div class="detail-main">
                     <h1 class="name">{{seller.name}}</h1>
-                    <star :size="48" :score="4"></star>
+                    <star :size="48" :score="seller.score"></star>
                 </div>
             </div>
             <div class="detail-close" @click="handleHideDetail" >
@@ -54,12 +54,11 @@ export default {
     },
     data() {
         return {
-            showDetail:false
+            showDetail:true
         }
     },
     created(){
         this.classMap = ['decrease','discount','special','invoice','guarantee']
-        console.log(this.seller.name)
     },
     methods: {
         handleShowDetail() {
