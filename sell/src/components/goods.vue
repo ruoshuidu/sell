@@ -3,8 +3,8 @@
       <div class="menu-wrapper" ref="menuWrapper">
           <div v-for="(item,index) in goods" 
                 :key="index" class="menu-item" 
-                :class="{current:currentIndex === index}" 
                 @click="selectIndex(index,$event)"
+                :class="{current : currentIndex === index}"
           >
               <div class="text-wrapper">
                  <span class="icon" v-show="item.type > 0" :class="classMap[item.type]"></span>
@@ -85,7 +85,6 @@ export default {
                 if(!height2 || (this.scrollY >= height1 && this.scrollY <= height2)){
                     return i
                 }
-                // console.log(height1 + ' ' + height2 + ' ' + i)
             }
             return 0
         },

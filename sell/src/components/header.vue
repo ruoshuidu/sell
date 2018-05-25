@@ -35,6 +35,29 @@
                 <div class="detail-main">
                     <h1 class="name">{{seller.name}}</h1>
                     <star :size="48" :score="seller.score"></star>
+                    <div class="preferInfo">
+                        <div class="prefer-title">
+                            <div class="line"></div>
+                            <div class="title">优惠信息</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="perfer-content-wrapper">
+                            <div class="prefer-content" v-for="item in seller.supports" :key="item.type">
+                                <span class="icon" v-show="item.type>=0" :class="classMap[item.type]"></span>
+                                <span class="text">{{item.description}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sellerInfo">
+                        <div class="prefer-title">
+                            <div class="line"></div>
+                            <div class="title">商家公告</div>
+                            <div class="line"></div>
+                        </div>
+                        <div class="seller-content">
+                            {{seller.bulletin}}
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="detail-close" @click="handleHideDetail" >
@@ -54,7 +77,7 @@ export default {
     },
     data() {
         return {
-            showDetail:true
+            showDetail:false
         }
     },
     created(){
@@ -216,6 +239,88 @@ export default {
                     font-size: 16px;
                     font-weight: 700;
                     text-align: center;
+                }
+                
+                .preferInfo{
+                    padding: 0 36px;
+                    .prefer-title{
+                       display: flex;
+                       margin:30px auto 24px auto;
+                       width: 100%;
+                       .line{
+                           flex: 1;
+                           position: relative;
+                           top: -6px;
+                           border-bottom: 1px solid rgba(255,255,255,0.2);
+                       }
+                       .title{
+                           padding:0 12px;
+                           font-size: 14px;
+                           color: #fff;
+                       }
+                    }
+                    .perfer-content-wrapper{
+                        margin-top: 24px;
+                        .prefer-content{
+                            margin-bottom: 12px;
+                            .icon{
+                                width: 16px;
+                                height: 16px;
+                                display: inline-block;
+                                background-size: 16px 16px !important;
+                                background-repeat: no-repeat !important;
+                                margin:0 6px 0 12px;
+                                vertical-align:middle;
+                                &.decrease{
+                                    background-image: url('../assets/img/decrease_2@2x.png')
+                                }
+                                &.discount{
+                                    background-image: url('../assets/img/discount_2@2x.png')
+                                }
+                                &.special{
+                                    background-image: url('../assets/img/special_2@2x.png')
+                                }
+                                &.invoice{
+                                    background-image: url('../assets/img/invoice_2@2x.png')
+                                }
+                                &.guarantee{
+                                    background-image: url('../assets/img/guarantee_2@2x.png')
+                                }
+                            }
+                            .text{
+                                color: #fff;
+                                font-weight: 200;
+                                font-size: 12px;  
+                                vertical-align:middle;                         
+                            }
+                         }
+                    }
+                }
+                .sellerInfo{
+                    padding: 0 32px;
+                    margin-top: 18px;
+                    .prefer-title{
+                       display: flex;
+                       margin:30px auto 24px auto;
+                       width: 100%;
+                       .line{
+                           flex: 1;
+                           position: relative;
+                           top: -6px;
+                           border-bottom: 1px solid rgba(255,255,255,0.2);
+                       }
+                       .title{
+                           padding:0 12px;
+                           font-size: 14px;
+                           color: #fff;
+                       }
+                    }
+                    .seller-content{
+                        padding:0 12px;
+                        margin-top: 24px;
+                        line-height: 24px;
+                        font-size: 12px;
+                    }
                 }
             }
         }

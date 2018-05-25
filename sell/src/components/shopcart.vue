@@ -11,9 +11,32 @@
             </div>
             <div class="deliver-base" :class="{ok:totalPrice >= minPrice}">{{inform}}</div>
         </div>
+         <div class="list-wrapper" v-show="listShow">
+            <div class="grap"></div>
+            <div class="cart-list">
+                <div class="list-header">
+                    <span class="title">购物车</span>
+                    <span class="empty">清空</span>
+                </div>
+                <div class="list-content">
+                    <ul>
+                        <li v-for="food in selectFoods">
+                            <span class="name">{{food.name}}</span>
+                            <div class="price">
+                                <span>￥{{food.count * food.count}}</span>
+                            </div>
+                            <div class="cart-control-wrapper">
+                                <cart-control :food="food"></cart-control>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import cartControl from './cartcontrol'
 export default {
     props:{
         minPrice:Number,
@@ -22,9 +45,12 @@ export default {
             type:Array
         }
     },
+    components:{
+        cartControl
+    },
     data() {
         return {
-           
+           listShow:true
         }
     },
     computed: {
@@ -143,6 +169,8 @@ export default {
                 background: green;
             }
         }
+        
     }
+    
 }
 </style>

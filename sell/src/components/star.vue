@@ -11,17 +11,16 @@ const CLS_HALF = 'half'
 export default {
     data() {
         return {
-            size: { 
-                type: Number
-            },
-            score:{
-                type:Number
-            }
+            
         }
+    },
+    props:{
+        size:Number,
+        score:Number
     },
     computed:{
         starType(){ //通过计算属性,返回组装过的类型,用来对应class类型
-            return 'star-48'
+            return 'star-' + this.size
         },
         itemClasses(){
             let result = [];
@@ -36,12 +35,12 @@ export default {
             }
             while(result.length < LENGTH){
                 result.push(CLS_off)
-                 
             }
             return result
                   
         }
-    }
+    },
+   
 }
 </script>
 <style lang="less" scoped>
